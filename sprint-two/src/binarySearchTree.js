@@ -1,27 +1,41 @@
 var BinarySearchTree = function(value) {
-  var newTree = {};
-  newTree.value = value;
-  newTree.left = null; // where all values are lower than the current value
-  newTree.right = null; //all values are higher than the current value
-  _.extend(newTree, treeMethods);
+  var tree = {};
+  tree.value = value;
+  tree.left = null; // where all values are lower than the current value
+  tree.right = null; //all values are higher than the current value
+  tree.children = [];
+  _.extend(tree, treeMethods);
 
-  return newTree;
+  return tree;
 };
 
 var treeMethods = {};
 
 //accepts a value and places it in the tree in the correct position.
-treeMethods.insert = function() {
+treeMethods.addChild = function(value) {
+// if first tree
+  // add somehow
+//else go to sort conditions
+// console.log(value);
+// console.log(this.value);
+
+  if (this.children.length > 2) {
+    if (this.value > value) {
+      this.left = BinarySearchTree(value);
+      tree.children.push(BinarySearchTree(value))
+    } else {
+      this.right = BinarySearchTree(value);
+    }
 
 };
 
 //accepts a value and returns a boolean reflecting whether or not the value is contained in the tree.
-treeMethods.contains = function() {
+treeMethods.contains = function(target) {
 
 };
 
 //accepts a callback and executes it on every value contained in the tree.
-treeMethods.depthFirstLog = function() {
+treeMethods.depthFirstLog = function(cb) {
 
 };
 
