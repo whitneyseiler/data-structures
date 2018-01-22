@@ -28,13 +28,25 @@ binaryTreePrototype.insert = function(value) {
 
 //accepts a value and returns a boolean reflecting whether or not the value is contained in the tree.
 binaryTreePrototype.contains = function(target) {
+  var isFound = false;
+
   if (this.value === target) {
-    return true;
+    isFound = true;
+
   } else if (target < this.value) {
-    return !!(this.left && this.left.contains(target)); //recursive search
+    if (this.left) {
+      if (this.left.contains(target)) {
+        isFound = true;
+      }
+    }
   } else if (target > this.value) {
-    return !!(this.right && this.right.contains(target))
+    if (this.right) {
+      if (this.right.contains(target)) {
+        isFound = true;
+      }
+    }
   }
+  return isFound;
 };
 
 //accepts a callback and executes it on every value contained in the tree.
