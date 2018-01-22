@@ -1,42 +1,51 @@
 var BinarySearchTree = function(value) {
-  var tree = {};
-  tree.value = value;
-  tree.left = null; // where all values are lower than the current value
-  tree.right = null; //all values are higher than the current value
-  tree.children = [];
-  _.extend(tree, treeMethods);
 
+  var tree = Object.create(binaryTreePrototype);
+  tree.value = value;
+  tree.left = null;
+  tree.right = null;
   return tree;
 };
 
-var treeMethods = {};
+var binaryTreePrototype = {};
 
 //accepts a value and places it in the tree in the correct position.
-treeMethods.addChild = function(value) {
-// if first tree
-  // add somehow
-//else go to sort conditions
-// console.log(value);
-// console.log(this.value);
-
-  if (this.children.length > 2) {
-    if (this.value > value) {
+binaryTreePrototype.insert = function(value) {
+  if (value < this.value) {
+    if (this.left === null) {
       this.left = BinarySearchTree(value);
-      tree.children.push(BinarySearchTree(value))
     } else {
-      this.right = BinarySearchTree(value);
+      this.left.insert(value);
     }
-
+  } else if (value > this.value) {
+    if (this.right === null) {
+      this.right = BinarySearchTree(value);
+    } else {
+      this.right.insert(value);
+    }
+  }
 };
 
 //accepts a value and returns a boolean reflecting whether or not the value is contained in the tree.
-treeMethods.contains = function(target) {
-
+binaryTreePrototype.contains = function(target) {
+  if (this.value === target) {
+    return true;
+  } else if (target < this.value) {
+    return !!(this.left && this.left.contains(target)); //recursive search
+  } else if (target > this.value) {
+    return !!(this.right && this.right.contains(target))
+  }
 };
 
 //accepts a callback and executes it on every value contained in the tree.
-treeMethods.depthFirstLog = function(cb) {
-
+binaryTreePrototype.depthFirstLog = function(cb) {
+  cb(this.value);
+  if (this.left) {
+    this.left.depthFirstLog(cb)
+  }
+  if (this.right) {
+    this.right.depthFirstLog(cb)
+  }
 };
 
 /*
@@ -54,4 +63,8 @@ Use case: Given a list of a million numbers, write a function that takes a new n
 
 /*
  * Complexity: What is the time complexity of the above functions?
+
+ insert: O(1);
+ contains: O(log n)
+ depthFirstLog: O(n)
  */
